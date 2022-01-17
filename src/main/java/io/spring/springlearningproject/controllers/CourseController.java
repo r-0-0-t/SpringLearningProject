@@ -4,10 +4,7 @@ import io.spring.springlearningproject.schemas.Course;
 import io.spring.springlearningproject.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +14,7 @@ import java.util.Optional;
  * Date: Jan 16, 2022
  */
 @RestController
+@RequestMapping(path = "/course")
 public class CourseController {
 
     private CourseService courseService;
@@ -26,18 +24,24 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @RequestMapping(value = "/courses", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Course> getCourses() {
         return courseService.getCourses();
     }
 
-    @RequestMapping(value = "/course/{id}", method = RequestMethod.GET)
-    public Course getCourse(@PathVariable("id") int id) {
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public Course insertCourse(@RequestBody Course course) {
+        return courseService.addNewCourse(course);
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public String deleteCourse(@PathVariable("id") String id) {
+        return String.format("Delete Count: %s", courseService.deleteCourse(id));
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Course getCourse(@PathVariable("id") String id) {
         Optional<Course> course = courseService.getCourse(id);
-        if(course.isPresent()) {
-            return course.get();
-        }
-        return null;
+        return course.orElse(null);
     }
 
 }

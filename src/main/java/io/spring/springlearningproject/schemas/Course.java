@@ -1,44 +1,27 @@
 package io.spring.springlearningproject.schemas;
 
 
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @author Ishan
  * Date: Jan 16, 2022
  */
+@Document
+@Data
 public class Course {
 
-    private int id;
+    @Id
+    private String id;
     private String courseName;
     private String author;
 
-    public Course(int id, String courseName, String author) {
+    public Course(String id, String courseName, String author) {
         this.id = id;
         this.courseName = courseName;
         this.author = author;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    @Override
-    public String toString() {
-        return "Course [id=" + id + ", courseName=" + courseName + ", author=" + author + "]";
-    }
 }
