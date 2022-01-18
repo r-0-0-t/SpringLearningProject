@@ -2,6 +2,7 @@ package io.spring.springlearningproject.controllers;
 
 import io.spring.springlearningproject.schemas.Course;
 import io.spring.springlearningproject.services.CourseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,10 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping(path = "/course")
+@RequiredArgsConstructor
 public class CourseController {
 
-    private CourseService courseService;
-
-    @Autowired
-    public CourseController(@Qualifier("courseService") CourseService courseService) {
-        this.courseService = courseService;
-    }
+    private final CourseService courseService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Course> getCourses() {

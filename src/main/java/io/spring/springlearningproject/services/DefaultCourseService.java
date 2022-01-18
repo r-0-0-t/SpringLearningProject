@@ -3,7 +3,6 @@ package io.spring.springlearningproject.services;
 import io.spring.springlearningproject.repository.RepositoryContext;
 import io.spring.springlearningproject.schemas.Course;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Service;
 
@@ -16,15 +15,13 @@ import java.util.Optional;
  * Date: Jan 16, 2022
  */
 @Service
-@Qualifier("courseService")
-public class CourseServiceImpl implements CourseService {
+public class DefaultCourseService implements CourseService {
 
 
     private final RepositoryContext repositoryContext;
 
     @Autowired
-    public CourseServiceImpl(RepositoryContext repositoryContext) {
-        super();
+    public DefaultCourseService(RepositoryContext repositoryContext) {
         this.repositoryContext = repositoryContext;
     }
 

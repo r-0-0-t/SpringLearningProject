@@ -1,7 +1,8 @@
 package io.spring.springlearningproject.repository;
 
 import com.mongodb.client.result.DeleteResult;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.spring.springlearningproject.repository.conditions.Condition;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -13,14 +14,10 @@ import java.util.List;
  * Date: Jan 17, 2022
  */
 @Repository
+@RequiredArgsConstructor
 public class CommonRepositoryContext implements RepositoryContext {
 
     private final MongoTemplate mongoTemplate;
-
-    @Autowired
-    public CommonRepositoryContext(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
 
     @Override
     public <T> List<T> getAllItems(Class<T> tClass) {
@@ -45,5 +42,12 @@ public class CommonRepositoryContext implements RepositoryContext {
             return deleteResult.getDeletedCount();
         }
         return 0;
+    }
+
+    @Override
+    public <T> List<T> getItemsByCondition(Class<T> tClass, Condition condition) {
+        Query query = new Query();
+        query.addCriteria(condition.getAllCriteria());
+        return mongoTemplate.find(query,tClass);
     }
 }

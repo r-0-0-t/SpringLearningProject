@@ -1,5 +1,6 @@
 package io.spring.springlearningproject.repository;
 
+import io.spring.springlearningproject.repository.conditions.Condition;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface RepositoryContext {
     <T> T getItemById(Class<T> tClass, String id);
     <T> T saveOne(T t);
     <T> long deleteById(Class<T> tClass, Object id);
+    <T> List<T> getItemsByCondition(Class<T> tClass, Condition condition);
 }
